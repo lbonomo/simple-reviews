@@ -50,9 +50,7 @@ class AdminColumns {
 	 * @param array $columns Columns.
 	 */
 	public function sort_columns( $columns ) {
-			// $columns['nombre de la coumna'] = 'valor que aparece en el Get &orderby=???&'.
-			$columns['source'] = 'source';
-			$columns['order']  = 'order';
+			$columns['order'] = 'order';
 			return $columns;
 	}
 
@@ -65,9 +63,7 @@ class AdminColumns {
 
 		switch ( $column ) {
 			case 'source':
-				foreach ( get_the_terms( $post_id, 'review-source' ) as $tax ) {
-					echo esc_attr( $tax->name );
-				}
+				echo esc_attr( get_the_terms( $post_id, 'review-source' )[0]->name );
 				break;
 			case 'review':
 				echo esc_attr( get_the_content( $post_id ) );
@@ -98,12 +94,6 @@ class AdminColumns {
 
 			case 'order': // Valor asignado en sort_columns().
 				$query->set( 'meta_key', 'review_order' );
-				$query->set( 'meta_key', 'review_order' );
-				// $query->set( 'orderby', 'meta_value_num' );
-				break;
-
-			case 'source': // Valor asignado en sort_columns().
-				$query->set( 'orderby', 'meta_value' );
 				break;
 
 			default:
