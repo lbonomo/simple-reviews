@@ -90,8 +90,9 @@ class Metabox {
 		// Check if our nonce is set.
 		if ( ! isset( $_POST['review_custom_box_nonce'] ) ) {
 			return $post_id;
+		} else {
+			$nonce = isset( $_POST['review_custom_box_nonce'] ) ? wp_unslash( $_POST['review_custom_box_nonce'] ) : '';
 		}
-		$nonce = $_POST['review_custom_box_nonce'];
 
 		// Verify that the nonce is valid.
 		if ( ! wp_verify_nonce( $nonce, 'review_custom_box' ) ) {
@@ -107,7 +108,7 @@ class Metabox {
 		}
 
 		// Check the user's permissions.
-		if ( 'page' == $_POST['post_type'] ) {
+		if ( isset( $_POST['post_type'] ) && 'simple-reviews' === $_POST['post_type'] ) {
 			if ( ! current_user_can( 'edit_page', $post_id ) ) {
 				return $post_id;
 			}
@@ -119,15 +120,12 @@ class Metabox {
 
 		/* OK, it's safe for us to save the data now. */
 
-		// Sanitize the user input.
-		// $mydata = ;
-		// $mydata = ;
-		// $mydata = ;.
-
 		// Update the meta field.
-		// update_post_meta( $post_id, 'review_source', sanitize_text_field( $_POST['review_source'] ) );
-		update_post_meta( $post_id, 'review_name', sanitize_text_field( $_POST['review_name'] ) );
-		update_post_meta( $post_id, 'review_link', sanitize_text_field( $_POST['review_link'] ));
-		update_post_meta( $post_id, 'review_order', sanitize_text_field( $_POST['review_order'] ));
+		$review_name_value  = isset( $_POST['review_name'] ) ? sanitize_text_field( wp_unslash( $_POST['review_name'] ) ) : '';
+		$review_link_value  = isset( $_POST['review_link'] ) ? sanitize_text_field( wp_unslash( $_POST['review_link'] ) ) : '';
+		$review_order_value = isset( $_POST['review_order'] ) ? sanitize_text_field( wp_unslash( $_POST['review_order'] ) ) : '';
+		update_post_meta( $post_id, 'review_name', $review_name_value );
+		update_post_meta( $post_id, 'review_link', $review_link_value );
+		update_post_meta( $post_id, 'review_order', $review_order_value );
 	}
 }

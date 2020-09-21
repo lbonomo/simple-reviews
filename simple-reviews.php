@@ -1,14 +1,26 @@
 <?php
 /**
- * @package SimpleQuote
- * @version 1.0.0
+ * Custon post tyep to manages reviews.
  *
- * Version: 1.0.0
- * Plugin Name: Simple Quote
- * Plugin URI: https://lucasbonomo.com/wordpress
- * Description: List of Review
- * Author: Lucas Bonomo
- * Author URI: https://lucasbonomo.com/
+ * @link              https://lucasbonomo.com
+ * @since             1.0.0
+ * @package           Simple_Reviews
+ *
+ * @wordpress-plugin
+ * Plugin Name:       Simple reviews
+ * Plugin URI:        https://lucasbonomo.com/wordpress
+ * Description:       CTP to manage reviews
+ * Version:           1.0.0
+ * Stable tag:        1.0.0
+ * Requires at least: 5.0
+ * Requires PHP:      7.0
+ * Tested up to:      5.5
+ * Author:            Lucas Bonomo
+ * Author URI:        https://lucasbonomo.com
+ * License:           GPL-2.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain:       show-remote-ip
+ * Domain Path:       /languages
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -47,7 +59,8 @@ function simple_reviews_run() {
  */
 function wpdocs_theme_name_scripts() {
 	$css_url = plugins_url( 'style.css', __FILE__ );
-	wp_enqueue_style( 'reviews-style', $css_url );
+	$version = get_plugin_data( __FILE__ )['Version'];
+	wp_enqueue_style( 'reviews-style', $version, 1, 'all' );
 }
 
 simple_reviews_run();
